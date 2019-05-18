@@ -1,4 +1,5 @@
 import os
+from datetime import datetime, date
 from flask import Flask
 from flask import render_template, request, redirect, url_for
 import requests
@@ -28,6 +29,41 @@ def weather():
     city=request.form['city_name']
     r=requests.get('https://api.openweathermap.org/data/2.5/forecast?q='+city+'&mode=json&appid=e0fc2d0b038108cd17f1b71026ece2ce')
     json_object = r.json()
+
+    """
+    generating a list of indices for data to be presented to the user from the
+    api response obtained
+    """
+    api_index=[]
+    current_date=date.today()
+    for n in range(len(json_object['list'])):
+        dt_txt=json_object['list'][n]['dt_txt'].split(' ')[0]
+        forecast_date=datetime.strptime(dt_txt, '%Y-%m-%d').date()
+        if current_date < forecast_date:
+            api_index.append(n)
+    """
+    getting the index values for obtaining weather values for morning, noon evening.
+    """
+    morning=[]
+    noon=[]
+    evening=[]
+    for num in range(len(api_index)):
+        if json_object['list'][num]['dt_txt'].split(' ')[1]=='06:00:00':
+            morning.append(num)
+        if json_object['list'][num]['dt_txt'].split(' ')[1]=='12:00:00':
+            noon.append(num)
+        if json_object['list'][num]['dt_txt'].split(' ')[1]=='18:00:00':
+            evening.append(num)
+
+    print(api_index)
+    print(morning)
+    print(noon)
+    print(evening)
+    print(json_object['list'][evening[0]]['dt_txt'].split(' ')[0])
+
+    """
+    information of requested city
+    """
     data_descr = {
     'Country':json_object['city']['country'],
     'City':json_object['city']['name'],
@@ -39,7 +75,7 @@ def weather():
     Dict holding weather forecast values for day 1.
     """
     day1_pred={
-    'Date':json_object['list'][6]['dt_txt'].split(' ')[0],
+    'Date':json_object['list'][0]['dt_txt'].split(' ')[0],
     'day1_morning':{
     'Temperature': str(round(float(json_object['list'][6]['main']['temp'])-273.15, 2)),
     'Pressure' : json_object['list'][6]['main']['pressure'],
