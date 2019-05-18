@@ -26,197 +26,199 @@ def index():
 
 @app.route("/weather", methods=['post'])
 def weather():
-    city=request.form['city_name']
-    r=requests.get('https://api.openweathermap.org/data/2.5/forecast?q='+city+'&mode=json&appid=e0fc2d0b038108cd17f1b71026ece2ce')
-    json_object = r.json()
+    try:
+        city=request.form['city_name']
+        r=requests.get('https://api.openweathermap.org/data/2.5/forecast?q='+city+'&xml=json&appid=e0fc2d0b038108cd17f1b71026ece2ce')
+        json_object = r.json()
+        """
+        generating a list of indices for data to be presented to the user from the
+        api response obtained
+        """
+        api_index=[]
+        current_date=date.today()
+        for n in range(len(json_object['list'])):
+            dt_txt=json_object['list'][n]['dt_txt'].split(' ')[0]
+            forecast_date=datetime.strptime(dt_txt, '%Y-%m-%d').date()
+            if current_date < forecast_date:
+                api_index.append(n)
+        """
+        getting the index values for obtaining weather values for morning, noon evening.
+        """
+        morning=[]
+        noon=[]
+        evening=[]
+        for num in range(len(api_index)):
+            if json_object['list'][num]['dt_txt'].split(' ')[1]=='09:00:00':
+                morning.append(num)
+            if json_object['list'][num]['dt_txt'].split(' ')[1]=='12:00:00':
+                noon.append(num)
+            if json_object['list'][num]['dt_txt'].split(' ')[1]=='15:00:00':
+                evening.append(num)
 
-    """
-    generating a list of indices for data to be presented to the user from the
-    api response obtained
-    """
-    api_index=[]
-    current_date=date.today()
-    for n in range(len(json_object['list'])):
-        dt_txt=json_object['list'][n]['dt_txt'].split(' ')[0]
-        forecast_date=datetime.strptime(dt_txt, '%Y-%m-%d').date()
-        if current_date < forecast_date:
-            api_index.append(n)
-    """
-    getting the index values for obtaining weather values for morning, noon evening.
-    """
-    morning=[]
-    noon=[]
-    evening=[]
-    for num in range(len(api_index)):
-        if json_object['list'][num]['dt_txt'].split(' ')[1]=='06:00:00':
-            morning.append(num)
-        if json_object['list'][num]['dt_txt'].split(' ')[1]=='12:00:00':
-            noon.append(num)
-        if json_object['list'][num]['dt_txt'].split(' ')[1]=='18:00:00':
-            evening.append(num)
+        #print(api_index)
+        #print(morning)
+        #print(noon)
+        #print(evening)
+        #print(json_object['list'][morning[2]]['dt_txt'].split(' ')[0])
+        """
+        information of requested city
+        """
+        data_descr = {
+        'Country':json_object['city']['country'],
+        'City':json_object['city']['name'],
+        'City_id':json_object['city']['id'],
+        }
+        """
+        Day 1
+        Dict holding weather forecast values for day 1.
+        """
+        day1_pred={
+        'Date':json_object['list'][morning[0]]['dt_txt'].split(' ')[0],
+        'day1_morning':{
+        'Temperature': str(round(float(json_object['list'][morning[0]]['main']['temp'])-273.15, 2)),
+        'Pressure' : json_object['list'][morning[0]]['main']['pressure'],
+        'Humidity':json_object['list'][morning[0]]['main']['humidity'],
+        'Description':json_object['list'][morning[0]]['weather'][0]['description'],
+        'Icon':json_object['list'][morning[0]]['weather'][0]['icon'],
+        'Time': json_object['list'][morning[0]]['dt_txt'].split(' ')[1]
+        },
 
-    print(api_index)
-    print(morning)
-    print(noon)
-    print(evening)
-    print(json_object['list'][evening[0]]['dt_txt'].split(' ')[0])
+        'day1_noon':{
+        'Temperature': str(round(float(json_object['list'][noon[0]]['main']['temp'])-273.15, 2)),
+        'Pressure' : json_object['list'][noon[0]]['main']['pressure'],
+        'Humidity':json_object['list'][noon[0]]['main']['humidity'],
+        'Description':json_object['list'][noon[0]]['weather'][0]['description'],
+        'Icon':json_object['list'][noon[0]]['weather'][0]['icon'],
+        'Time': json_object['list'][noon[0]]['dt_txt'].split(' ')[1]
+        },
+        'day1_evening': {
+        'Temperature': str(round(float(json_object['list'][evening[0]]['main']['temp'])-273.15, 2)),
+        'Pressure' : json_object['list'][evening[0]]['main']['pressure'],
+        'Humidity':json_object['list'][evening[0]]['main']['humidity'],
+        'Description':json_object['list'][evening[0]]['weather'][0]['description'],
+        'Icon':json_object['list'][evening[0]]['weather'][0]['icon'],
+        'Time': json_object['list'][evening[0]]['dt_txt'].split(' ')[1]
+        },
+        }
+        """
+        DAY 2
+        """
+        day2_pred={
+        'Date':json_object['list'][morning[1]]['dt_txt'].split(' ')[0],
+        'day2_morning': {
+        'Temperature': str(round(float(json_object['list'][morning[1]]['main']['temp'])-273.15, 2)),
+        'Pressure' : json_object['list'][morning[1]]['main']['pressure'],
+        'Humidity':json_object['list'][morning[1]]['main']['humidity'],
+        'Description':json_object['list'][morning[1]]['weather'][0]['description'],
+        'Icon':json_object['list'][morning[1]]['weather'][0]['icon'],
+        'Time': json_object['list'][morning[1]]['dt_txt'].split(' ')[1]
+        },
+        'day2_noon': {
+        'Temperature': str(round(float(json_object['list'][noon[1]]['main']['temp'])-273.15, 2)),
+        'Pressure' : json_object['list'][noon[1]]['main']['pressure'],
+        'Humidity':json_object['list'][noon[1]]['main']['humidity'],
+        'Description':json_object['list'][noon[1]]['weather'][0]['description'],
+        'Icon':json_object['list'][noon[1]]['weather'][0]['icon'],
+        'Time': json_object['list'][noon[1]]['dt_txt'].split(' ')[1]
+        },
+        'day2_evening': {
+        'Temperature': str(round(float(json_object['list'][evening[1]]['main']['temp'])-273.15, 2)),
+        'Pressure' : json_object['list'][evening[1]]['main']['pressure'],
+        'Humidity':json_object['list'][evening[1]]['main']['humidity'],
+        'Description':json_object['list'][evening[1]]['weather'][0]['description'],
+        'Icon':json_object['list'][evening[1]]['weather'][0]['icon'],
+        'Time': json_object['list'][evening[1]]['dt_txt'].split(' ')[1]
+        },
+        }
+        """
+        DAY 3
+        """
+        day3_pred={
+        'Date':json_object['list'][morning[2]]['dt_txt'].split(' ')[0],
+        'day3_morning': {
+        'Temperature': str(round(float(json_object['list'][morning[2]]['main']['temp'])-273.15, 2)),
+        'Pressure' : json_object['list'][morning[2]]['main']['pressure'],
+        'Humidity':json_object['list'][morning[2]]['main']['humidity'],
+        'Description':json_object['list'][morning[2]]['weather'][0]['description'],
+        'Icon':json_object['list'][morning[2]]['weather'][0]['icon'],
+        'Time': json_object['list'][morning[2]]['dt_txt'].split(' ')[1]
+        },
+        'day3_noon': {
+        'Temperature': str(round(float(json_object['list'][noon[2]]['main']['temp'])-273.15, 2)),
+        'Pressure' : json_object['list'][noon[2]]['main']['pressure'],
+        'Humidity':json_object['list'][noon[2]]['main']['humidity'],
+        'Description':json_object['list'][noon[2]]['weather'][0]['description'],
+        'Icon':json_object['list'][noon[2]]['weather'][0]['icon'],
+        'Time': json_object['list'][noon[2]]['dt_txt'].split(' ')[1]
+        },
+        'day3_evening': {
+        'Temperature': str(round(float(json_object['list'][evening[2]]['main']['temp'])-273.15, 2)),
+        'Pressure' : json_object['list'][evening[2]]['main']['pressure'],
+        'Humidity':json_object['list'][evening[2]]['main']['humidity'],
+        'Description':json_object['list'][evening[2]]['weather'][0]['description'],
+        'Icon':json_object['list'][evening[2]]['weather'][0]['icon'],
+        'Time': json_object['list'][evening[2]]['dt_txt'].split(' ')[1]
+        },
+        }
 
-    """
-    information of requested city
-    """
-    data_descr = {
-    'Country':json_object['city']['country'],
-    'City':json_object['city']['name'],
-    'City_id':json_object['city']['id'],
-    }
+        """
+        DAY4
+        Store day4 values from morning to evening
+        """
+        day4_pred={
+        'Date':json_object['list'][morning[3]]['dt_txt'].split(' ')[0],
+        'day4_morning': {
+        'Temperature': str(round(float(json_object['list'][morning[3]]['main']['temp'])-273.15, 2)),
+        'Pressure' : json_object['list'][morning[3]]['main']['pressure'],
+        'Humidity':json_object['list'][morning[3]]['main']['humidity'],
+        'Description':json_object['list'][morning[3]]['weather'][0]['description'],
+        'Icon':json_object['list'][morning[3]]['weather'][0]['icon'],
+        'Time': json_object['list'][morning[3]]['dt_txt'].split(' ')[1]
+        },
+        'day4_noon': {
+        'Temperature': str(round(float(json_object['list'][noon[3]]['main']['temp'])-273.15, 2)),
+        'Pressure' : json_object['list'][noon[3]]['main']['pressure'],
+        'Humidity':json_object['list'][noon[3]]['main']['humidity'],
+        'Description':json_object['list'][noon[3]]['weather'][0]['description'],
+        'Icon':json_object['list'][noon[3]]['weather'][0]['icon'],
+        'Time':json_object['list'][noon[3]]['dt_txt'].split(' ')[1]
+        },
+        'day4_evening': {
+        'Temperature': str(round(float(json_object['list'][evening[3]]['main']['temp'])-273.15, 2)),
+        'Pressure' : json_object['list'][evening[3]]['main']['pressure'],
+        'Humidity':json_object['list'][evening[3]]['main']['humidity'],
+        'Description':json_object['list'][evening[3]]['weather'][0]['description'],
+        'Icon':json_object['list'][evening[3]]['weather'][0]['icon'],
+        'Time': json_object['list'][evening[3]]['dt_txt'].split(' ')[1]
+        },
+        }
+        """
+        DAY 5
+        Store day5 values from morning to noon
+        """
+        day5_pred = {
+        'Date':json_object['list'][37]['dt_txt'].split(' ')[0],
+        "day5_morning": {
+        'Temperature': str(round(float(json_object['list'][37]['main']['temp'])-273.15, 2)),
+        'Pressure' : json_object['list'][37]['main']['pressure'],
+        'Humidity':json_object['list'][37]['main']['humidity'],
+        'Description':json_object['list'][37]['weather'][0]['description'],
+        'Icon':json_object['list'][37]['weather'][0]['icon'],
+        'Time': json_object['list'][37]['dt_txt'].split(' ')[1]
+        },
+        'day5_noon': {
+        'Temperature': str(round(float(json_object['list'][39]['main']['temp'])-273.15, 2)),
+        'Pressure' : json_object['list'][39]['main']['pressure'],
+        'Humidity':json_object['list'][39]['main']['humidity'],
+        'Description':json_object['list'][39]['weather'][0]['description'],
+        'Icon':json_object['list'][39]['weather'][0]['icon'],
+        'Time': json_object['list'][39]['dt_txt'].split(' ')[1]
+        },
+        }
+        return render_template('weather.html', data_descr=data_descr, day1_pred=day1_pred, day2_pred=day2_pred, day3_pred=day3_pred, day4_pred=day4_pred, day5_pred=day5_pred)
+    except:
+        return redirect(url_for('index'))
 
-    """
-    Day 1
-    Dict holding weather forecast values for day 1.
-    """
-    day1_pred={
-    'Date':json_object['list'][0]['dt_txt'].split(' ')[0],
-    'day1_morning':{
-    'Temperature': str(round(float(json_object['list'][6]['main']['temp'])-273.15, 2)),
-    'Pressure' : json_object['list'][6]['main']['pressure'],
-    'Humidity':json_object['list'][6]['main']['humidity'],
-    'Description':json_object['list'][6]['weather'][0]['description'],
-    'Icon':json_object['list'][6]['weather'][0]['icon'],
-    'Time': json_object['list'][6]['dt_txt'].split(' ')[1]
-    },
-    'day1_noon':{
-    'Temperature': str(round(float(json_object['list'][7]['main']['temp'])-273.15, 2)),
-    'Pressure' : json_object['list'][7]['main']['pressure'],
-    'Humidity':json_object['list'][7]['main']['humidity'],
-    'Description':json_object['list'][7]['weather'][0]['description'],
-    'Icon':json_object['list'][7]['weather'][0]['icon'],
-    'Time': json_object['list'][7]['dt_txt'].split(' ')[1]
-    },
-    'day1_evening': {
-    'Temperature': str(round(float(json_object['list'][9]['main']['temp'])-273.15, 2)),
-    'Pressure' : json_object['list'][9]['main']['pressure'],
-    'Humidity':json_object['list'][9]['main']['humidity'],
-    'Description':json_object['list'][9]['weather'][0]['description'],
-    'Icon':json_object['list'][9]['weather'][0]['icon'],
-    'Time': json_object['list'][9]['dt_txt'].split(' ')[1]
-    },
-    }
-    """
-    DAY 2
-    """
-    day2_pred={
-    'Date':json_object['list'][13]['dt_txt'].split(' ')[0],
-    'day2_morning': {
-    'Temperature': str(round(float(json_object['list'][13]['main']['temp'])-273.15, 2)),
-    'Pressure' : json_object['list'][13]['main']['pressure'],
-    'Humidity':json_object['list'][13]['main']['humidity'],
-    'Description':json_object['list'][13]['weather'][0]['description'],
-    'Icon':json_object['list'][13]['weather'][0]['icon'],
-    'Time': json_object['list'][13]['dt_txt'].split(' ')[1]
-    },
-    'day2_noon': {
-    'Temperature': str(round(float(json_object['list'][15]['main']['temp'])-273.15, 2)),
-    'Pressure' : json_object['list'][15]['main']['pressure'],
-    'Humidity':json_object['list'][15]['main']['humidity'],
-    'Description':json_object['list'][15]['weather'][0]['description'],
-    'Icon':json_object['list'][15]['weather'][0]['icon'],
-    'Time': json_object['list'][15]['dt_txt'].split(' ')[1]
-    },
-    'day2_evening': {
-    'Temperature': str(round(float(json_object['list'][17]['main']['temp'])-273.15, 2)),
-    'Pressure' : json_object['list'][17]['main']['pressure'],
-    'Humidity':json_object['list'][17]['main']['humidity'],
-    'Description':json_object['list'][17]['weather'][0]['description'],
-    'Icon':json_object['list'][17]['weather'][0]['icon'],
-    'Time': json_object['list'][17]['dt_txt'].split(' ')[1]
-    },
-    }
-    """
-    DAY 3
-    """
-    day3_pred={
-    'Date':json_object['list'][21]['dt_txt'].split(' ')[0],
-    'day3_morning': {
-    'Temperature': str(round(float(json_object['list'][21]['main']['temp'])-273.15, 2)),
-    'Pressure' : json_object['list'][21]['main']['pressure'],
-    'Humidity':json_object['list'][21]['main']['humidity'],
-    'Description':json_object['list'][21]['weather'][0]['description'],
-    'Icon':json_object['list'][21]['weather'][0]['icon'],
-    'Time': json_object['list'][21]['dt_txt'].split(' ')[1]
-    },
-    'day3_noon': {
-    'Temperature': str(round(float(json_object['list'][23]['main']['temp'])-273.15, 2)),
-    'Pressure' : json_object['list'][23]['main']['pressure'],
-    'Humidity':json_object['list'][23]['main']['humidity'],
-    'Description':json_object['list'][23]['weather'][0]['description'],
-    'Icon':json_object['list'][23]['weather'][0]['icon'],
-    'Time': json_object['list'][23]['dt_txt'].split(' ')[1]
-    },
-    'day3_evening': {
-    'Temperature': str(round(float(json_object['list'][25]['main']['temp'])-273.15, 2)),
-    'Pressure' : json_object['list'][25]['main']['pressure'],
-    'Humidity':json_object['list'][25]['main']['humidity'],
-    'Description':json_object['list'][25]['weather'][0]['description'],
-    'Icon':json_object['list'][25]['weather'][0]['icon'],
-    'Time': json_object['list'][25]['dt_txt'].split(' ')[1]
-    },
-    }
-
-    """
-    DAY4
-    Store day4 values from morning to evening
-    """
-    day4_pred={
-    'Date':json_object['list'][29]['dt_txt'].split(' ')[0],
-    'day4_morning': {
-    'Temperature': str(round(float(json_object['list'][29]['main']['temp'])-273.15, 2)),
-    'Pressure' : json_object['list'][29]['main']['pressure'],
-    'Humidity':json_object['list'][29]['main']['humidity'],
-    'Description':json_object['list'][29]['weather'][0]['description'],
-    'Icon':json_object['list'][29]['weather'][0]['icon'],
-    'Time': json_object['list'][29]['dt_txt'].split(' ')[1]
-    },
-    'day4_noon': {
-    'Temperature': str(round(float(json_object['list'][31]['main']['temp'])-273.15, 2)),
-    'Pressure' : json_object['list'][31]['main']['pressure'],
-    'Humidity':json_object['list'][31]['main']['humidity'],
-    'Description':json_object['list'][31]['weather'][0]['description'],
-    'Icon':json_object['list'][31]['weather'][0]['icon'],
-    'Time':json_object['list'][31]['dt_txt'].split(' ')[1]
-    },
-    'day4_evening': {
-    'Temperature': str(round(float(json_object['list'][33]['main']['temp'])-273.15, 2)),
-    'Pressure' : json_object['list'][33]['main']['pressure'],
-    'Humidity':json_object['list'][33]['main']['humidity'],
-    'Description':json_object['list'][33]['weather'][0]['description'],
-    'Icon':json_object['list'][33]['weather'][0]['icon'],
-    'Time': json_object['list'][33]['dt_txt'].split(' ')[1]
-    },
-    }
-    """
-    DAY 5
-    Store day5 values from morning to noon
-    """
-    day5_pred = {
-    'Date':json_object['list'][37]['dt_txt'].split(' ')[0],
-    "day5_morning": {
-    'Temperature': str(round(float(json_object['list'][37]['main']['temp'])-273.15, 2)),
-    'Pressure' : json_object['list'][37]['main']['pressure'],
-    'Humidity':json_object['list'][37]['main']['humidity'],
-    'Description':json_object['list'][37]['weather'][0]['description'],
-    'Icon':json_object['list'][37]['weather'][0]['icon'],
-    'Time': json_object['list'][37]['dt_txt'].split(' ')[1]
-    },
-    'day5_noon': {
-    'Temperature': str(round(float(json_object['list'][39]['main']['temp'])-273.15, 2)),
-    'Pressure' : json_object['list'][39]['main']['pressure'],
-    'Humidity':json_object['list'][39]['main']['humidity'],
-    'Description':json_object['list'][39]['weather'][0]['description'],
-    'Icon':json_object['list'][39]['weather'][0]['icon'],
-    'Time': json_object['list'][39]['dt_txt'].split(' ')[1]
-    },
-    }
-    return render_template('weather.html', data_descr=data_descr, day1_pred=day1_pred, day2_pred=day2_pred, day3_pred=day3_pred, day4_pred=day4_pred, day5_pred=day5_pred)
 
 if __name__=='__main__':
     #app.secret_key = 'super secret key'

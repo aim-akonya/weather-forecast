@@ -43,134 +43,151 @@
         </tbody>
       </table>
     </div>
+
+    <div class="card-body">
+      <div class="card-header">
+        <h2 class="card-title">
+          {{ day2_pred.Date }}{{data_descr.city}}
+        </h2>
+
+      </div>
+
+      <table class="table-striped table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Morning</th>
+            <th scope="col">Noon</th>
+            <th scope="col">Evening</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+
+            <td><dl><dt><img src="http://openweathermap.org/img/w/{{day2_pred.day2_morning.Icon}}.png" alt="image here"></dt><dd><small>{{ day2_pred.day2_morning.Description }}</small></dd></dl></td>
+            <td><dl><dt><img src="http://openweathermap.org/img/w/{{day2_pred.day2_noon.Icon}}.png" alt="image here"></dt><dd><small>{{ day2_pred.day2_noon.Description }}</small></dd></dl></td>
+            <td><dl><dt><img src="http://openweathermap.org/img/w/{{day2_pred.day2_evening.Icon}}.png" alt="image here"></dt><dd><small>{{ day2_pred.day2_evening.Description }}</small></dd></dl></td>
+          </tr>
+          <tr>
+            <td>{{day2_pred.day2_morning.Temperature+' '}}<sup>0</sup>C</td>
+            <td>{{day2_pred.day2_noon.Temperature+' '}}<sup>0</sup>C</td>
+            <td>{{day2_pred.day2_evening.Temperature+' '}}<sup>0</sup>C</td>
+          </tr>
+          <tr>
+            <td><dl><dt>{{day2_pred.day2_morning.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
+            <td><dl><dt>{{day2_pred.day2_noon.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
+            <td><dl><dt>{{day2_pred.day2_evening.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
+          </tr>
+        </tbody>
+      </table>
+
+
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <h2 class="card-title">
+          {{ day3_pred.Date }}{{data_descr.city}}
+        </h2>
+      </div>
+      <table class="table-striped table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Morning</th>
+            <th scope="col">Noon</th>
+            <th scope="col">Evening</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+
+            <td><dl><dt><img src="http://openweathermap.org/img/w/{{day3_pred.day3_morning.Icon}}.png" alt="image here"></dt><dd><small>{{ day3_pred.day3_morning.Description }}</small></dd></dl></td>
+            <td><dl><dt><img src="http://openweathermap.org/img/w/{{day3_pred.day3_noon.Icon}}.png" alt="image here"></dt><dd><small>{{ day3_pred.day3_noon.Description }}</small></dd></dl></td>
+            <td><dl><dt><img src="http://openweathermap.org/img/w/{{day3_pred.day3_evening.Icon}}.png" alt="image here"></dt><dd><small>{{ day3_pred.day3_evening.Description }}</small></dd></dl></td>
+          </tr>
+          <tr>
+            <td>{{day3_pred.day3_morning.Temperature+' '}}<sup>0</sup>C</td>
+            <td>{{day3_pred.day3_noon.Temperature+' '}}<sup>0</sup>C</td>
+            <td>{{day3_pred.day3_evening.Temperature+' '}}<sup>0</sup>C</td>
+          </tr>
+          <tr>
+            <td><dl><dt>{{day3_pred.day3_morning.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
+            <td><dl><dt>{{day3_pred.day3_noon.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
+            <td><dl><dt>{{day3_pred.day3_evening.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <h2 class="card-title">
+          {{ day4_pred.Date }}{{data_descr.city}}
+        </h2>
+      </div>
+      <table class="table-striped table table-sm">
+        <caption></caption>
+        <thead>
+          <tr>
+            <th scope="col">Morning</th>
+            <th scope="col">Noon</th>
+            <th scope="col">Evening</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+
+            <td><dl><dt><img src="http://openweathermap.org/img/w/{{day4_pred.day4_morning.Icon}}.png" alt="image here"></dt><dd><small>{{ day4_pred.day4_morning.Description }}</small></dd></dl></td>
+            <td><dl><dt><img src="http://openweathermap.org/img/w/{{day4_pred.day4_noon.Icon}}.png" alt="image here"></dt><dd><small>{{ day4_pred.day4_noon.Description }}</small></dd></dl></td>
+            <td><dl><dt><img src="http://openweathermap.org/img/w/{{day4_pred.day4_evening.Icon}}.png" alt="image here"></dt><dd><small>{{ day4_pred.day4_evening.Description }}</small></dd></dl></td>
+          </tr>
+          <tr>
+            <td>{{day4_pred.day4_morning.Temperature+' '}}<sup>0</sup>C</td>
+            <td>{{day4_pred.day4_noon.Temperature+' '}}<sup>0</sup>C</td>
+            <td>{{day4_pred.day4_evening.Temperature+' '}}<sup>0</sup>C</td>
+          </tr>
+          <tr>
+            <td><dl><dt>{{day4_pred.day4_morning.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
+            <td><dl><dt>{{day4_pred.day4_noon.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
+            <td><dl><dt>{{day4_pred.day4_evening.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <div class="card-body">
+      <card-header>
+        <h2 class="card-header">{{ day5_pred.Date }}{{data_descr.city}}</h2>
+      </card-header>
+      <table class="table-striped table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Morning</th>
+            <th scope="col">Noon</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+
+            <td><dl><dt><img src="http://openweathermap.org/img/w/{{day5_pred.day5_morning.Icon}}.png" alt="image here"></dt><dd><small>{{ day5_pred.day5_morning.Description }}</small></dd></dl></td>
+            <td><dl><dt><img src="http://openweathermap.org/img/w/{{day5_pred.day5_noon.Icon}}.png" alt="image here"></dt><dd><small>{{ day5_pred.day5_noon.Description }}</small></dd></dl></td>
+
+          </tr>
+          <tr>
+            <td>{{day5_pred.day5_morning.Temperature+' '}}<sup>0</sup>C</td>
+            <td>{{day5_pred.day5_noon.Temperature+' '}}<sup>0</sup>C</td>
+
+          </tr>
+          <tr>
+            <td><dl><dt>{{day5_pred.day5_morning.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
+            <td><dl><dt>{{day5_pred.day5_noon.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
+
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
   </div>
 
-
-  <br/>
-  <hr/>
-
-
-  <table class="table-striped table table-sm">
-    <caption>{{ day2_pred.Date }}{{data_descr.city}}</caption>
-    <thead>
-      <tr>
-        <th scope="col">Morning</th>
-        <th scope="col">Noon</th>
-        <th scope="col">Evening</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-
-        <td><dl><dt><img src="http://openweathermap.org/img/w/{{day2_pred.day2_morning.Icon}}.png" alt="image here"></dt><dd><small>{{ day2_pred.day2_morning.Description }}</small></dd></dl></td>
-        <td><dl><dt><img src="http://openweathermap.org/img/w/{{day2_pred.day2_noon.Icon}}.png" alt="image here"></dt><dd><small>{{ day2_pred.day2_noon.Description }}</small></dd></dl></td>
-        <td><dl><dt><img src="http://openweathermap.org/img/w/{{day2_pred.day2_evening.Icon}}.png" alt="image here"></dt><dd><small>{{ day2_pred.day2_evening.Description }}</small></dd></dl></td>
-      </tr>
-      <tr>
-        <td>{{day2_pred.day2_morning.Temperature+' '}}<sup>0</sup>C</td>
-        <td>{{day2_pred.day2_noon.Temperature+' '}}<sup>0</sup>C</td>
-        <td>{{day2_pred.day2_evening.Temperature+' '}}<sup>0</sup>C</td>
-      </tr>
-      <tr>
-        <td><dl><dt>{{day2_pred.day2_morning.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
-        <td><dl><dt>{{day2_pred.day2_noon.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
-        <td><dl><dt>{{day2_pred.day2_evening.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
-      </tr>
-    </tbody>
-  </table>
-  <br/>
-  <hr/>
-
-  <table class="table-striped table table-sm">
-    <caption>{{ day3_pred.Date }}{{data_descr.city}}</caption>
-    <thead>
-      <tr>
-        <th scope="col">Morning</th>
-        <th scope="col">Noon</th>
-        <th scope="col">Evening</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-
-        <td><dl><dt><img src="http://openweathermap.org/img/w/{{day3_pred.day3_morning.Icon}}.png" alt="image here"></dt><dd><small>{{ day3_pred.day3_morning.Description }}</small></dd></dl></td>
-        <td><dl><dt><img src="http://openweathermap.org/img/w/{{day3_pred.day3_noon.Icon}}.png" alt="image here"></dt><dd><small>{{ day3_pred.day3_noon.Description }}</small></dd></dl></td>
-        <td><dl><dt><img src="http://openweathermap.org/img/w/{{day3_pred.day3_evening.Icon}}.png" alt="image here"></dt><dd><small>{{ day3_pred.day3_evening.Description }}</small></dd></dl></td>
-      </tr>
-      <tr>
-        <td>{{day3_pred.day3_morning.Temperature+' '}}<sup>0</sup>C</td>
-        <td>{{day3_pred.day3_noon.Temperature+' '}}<sup>0</sup>C</td>
-        <td>{{day3_pred.day3_evening.Temperature+' '}}<sup>0</sup>C</td>
-      </tr>
-      <tr>
-        <td><dl><dt>{{day3_pred.day3_morning.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
-        <td><dl><dt>{{day3_pred.day3_noon.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
-        <td><dl><dt>{{day3_pred.day3_evening.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
-      </tr>
-    </tbody>
-  </table>
-  <br/>
-  <hr/>
-
-  <table class="table-striped table table-sm">
-    <caption>{{ day4_pred.Date }}{{data_descr.city}}</caption>
-    <thead>
-      <tr>
-        <th scope="col">Morning</th>
-        <th scope="col">Noon</th>
-        <th scope="col">Evening</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-
-        <td><dl><dt><img src="http://openweathermap.org/img/w/{{day4_pred.day4_morning.Icon}}.png" alt="image here"></dt><dd><small>{{ day4_pred.day4_morning.Description }}</small></dd></dl></td>
-        <td><dl><dt><img src="http://openweathermap.org/img/w/{{day4_pred.day4_noon.Icon}}.png" alt="image here"></dt><dd><small>{{ day4_pred.day4_noon.Description }}</small></dd></dl></td>
-        <td><dl><dt><img src="http://openweathermap.org/img/w/{{day4_pred.day4_evening.Icon}}.png" alt="image here"></dt><dd><small>{{ day4_pred.day4_evening.Description }}</small></dd></dl></td>
-      </tr>
-      <tr>
-        <td>{{day4_pred.day4_morning.Temperature+' '}}<sup>0</sup>C</td>
-        <td>{{day4_pred.day4_noon.Temperature+' '}}<sup>0</sup>C</td>
-        <td>{{day4_pred.day4_evening.Temperature+' '}}<sup>0</sup>C</td>
-      </tr>
-      <tr>
-        <td><dl><dt>{{day4_pred.day4_morning.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
-        <td><dl><dt>{{day4_pred.day4_noon.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
-        <td><dl><dt>{{day4_pred.day4_evening.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
-      </tr>
-    </tbody>
-  </table>
-  <br/>
-  <hr/>
-
-  <table class="table-striped table table-sm">
-    <caption>{{ day5_pred.Date }}{{data_descr.city}}</caption>
-    <thead>
-      <tr>
-        <th scope="col">Morning</th>
-        <th scope="col">Noon</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-
-        <td><dl><dt><img src="http://openweathermap.org/img/w/{{day5_pred.day5_morning.Icon}}.png" alt="image here"></dt><dd><small>{{ day5_pred.day5_morning.Description }}</small></dd></dl></td>
-        <td><dl><dt><img src="http://openweathermap.org/img/w/{{day5_pred.day5_noon.Icon}}.png" alt="image here"></dt><dd><small>{{ day5_pred.day5_noon.Description }}</small></dd></dl></td>
-
-      </tr>
-      <tr>
-        <td>{{day5_pred.day5_morning.Temperature+' '}}<sup>0</sup>C</td>
-        <td>{{day5_pred.day5_noon.Temperature+' '}}<sup>0</sup>C</td>
-
-      </tr>
-      <tr>
-        <td><dl><dt>{{day5_pred.day5_morning.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
-        <td><dl><dt>{{day5_pred.day5_noon.Humidity|string +' '}}g/m<sup>3</sup></dt><dd><small>Humidity</small></dd></dl></td>
-
-      </tr>
-    </tbody>
-  </table>
-  <br/>
+    <br/>
   <hr/>
 </div>
 
