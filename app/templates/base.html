@@ -8,21 +8,26 @@
   </head>
   <body>
     <header>
-      <div class='card'>
+      <div class='card' style="max-width: 100%">
         <article>
           <p>
             <h1 class="display-4 text-center card-header rounded"><b>WEATHER FORECAST</b></h1>
           </p>
-          <p class='lead'>
-            <h3>Get your <b>FIVE</b> day weather forecast report<h3>
-          </p>
+          <div class="container">
+          <div class='text-right'>
+            <a href='{{url_for('index')}}'>Home</a>
+          </div>
+        </div>
         </article>
       </div>
-      <div class='text-right'>
-        <a href='{{url_for('index')}}'>Home</a>
-      </div>
+
     </header>
     <main>
+      <div class="card-title">
+        <p class='text-right'>
+          <h3>Get your weather forecast report<h3>
+        </p>
+      </div>
       {% block content %}
 
       {% endblock %}

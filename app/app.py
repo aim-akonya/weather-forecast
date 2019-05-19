@@ -28,7 +28,7 @@ def index():
 def weather():
     try:
         city=request.form['city_name']
-        r=requests.get('https://api.openweathermap.org/data/2.5/forecast?q='+city+'&xml=json&appid=e0fc2d0b038108cd17f1b71026ece2ce')
+        r=requests.get('https://api.openweathermap.org/data/2.5/forecast?q='+city+'&mode=json&appid=e0fc2d0b038108cd17f1b71026ece2ce')
         json_object = r.json()
         """
         generating a list of indices for data to be presented to the user from the
@@ -36,18 +36,19 @@ def weather():
         """
         api_index=[]
         current_date=date.today()
-        for n in range(len(json_object['list'])):
-            dt_txt=json_object['list'][n]['dt_txt'].split(' ')[0]
+        for num in range(len(json_object['list'])):
+            dt_txt=json_object['list'][num]['dt_txt'].split(' ')[0]
             forecast_date=datetime.strptime(dt_txt, '%Y-%m-%d').date()
-            if current_date < forecast_date:
-                api_index.append(n)
+            if forecast_date>current_date:
+                api_index.append(num)
         """
         getting the index values for obtaining weather values for morning, noon evening.
         """
+        print(len(api_index))
         morning=[]
         noon=[]
         evening=[]
-        for num in range(len(api_index)):
+        for num in api_index:
             if json_object['list'][num]['dt_txt'].split(' ')[1]=='09:00:00':
                 morning.append(num)
             if json_object['list'][num]['dt_txt'].split(' ')[1]=='12:00:00':
@@ -55,11 +56,11 @@ def weather():
             if json_object['list'][num]['dt_txt'].split(' ')[1]=='15:00:00':
                 evening.append(num)
 
-        #print(api_index)
-        #print(morning)
-        #print(noon)
-        #print(evening)
-        #print(json_object['list'][morning[2]]['dt_txt'].split(' ')[0])
+        print(api_index)
+        print(morning)
+        print(noon)
+        print(evening)
+        print(json_object['list'][evening[3]]['dt_txt'].split(' ')[0])
         """
         information of requested city
         """
@@ -192,30 +193,7 @@ def weather():
         'Time': json_object['list'][evening[3]]['dt_txt'].split(' ')[1]
         },
         }
-        """
-        DAY 5
-        Store day5 values from morning to noon
-        """
-        day5_pred = {
-        'Date':json_object['list'][37]['dt_txt'].split(' ')[0],
-        "day5_morning": {
-        'Temperature': str(round(float(json_object['list'][37]['main']['temp'])-273.15, 2)),
-        'Pressure' : json_object['list'][37]['main']['pressure'],
-        'Humidity':json_object['list'][37]['main']['humidity'],
-        'Description':json_object['list'][37]['weather'][0]['description'],
-        'Icon':json_object['list'][37]['weather'][0]['icon'],
-        'Time': json_object['list'][37]['dt_txt'].split(' ')[1]
-        },
-        'day5_noon': {
-        'Temperature': str(round(float(json_object['list'][39]['main']['temp'])-273.15, 2)),
-        'Pressure' : json_object['list'][39]['main']['pressure'],
-        'Humidity':json_object['list'][39]['main']['humidity'],
-        'Description':json_object['list'][39]['weather'][0]['description'],
-        'Icon':json_object['list'][39]['weather'][0]['icon'],
-        'Time': json_object['list'][39]['dt_txt'].split(' ')[1]
-        },
-        }
-        return render_template('weather.html', data_descr=data_descr, day1_pred=day1_pred, day2_pred=day2_pred, day3_pred=day3_pred, day4_pred=day4_pred, day5_pred=day5_pred)
+        return render_template('weather.html', data_descr=data_descr, day1_pred=day1_pred, day2_pred=day2_pred, day3_pred=day3_pred, day4_pred=day4_pred)
     except:
         return redirect(url_for('index'))
 
